@@ -4,6 +4,7 @@ import Header from "../../common/header/Header"
 import { withStyles } from '@material-ui/core/styles';
 import moviesData from "../../common/movieData";
 import genres from "../../common/genres";
+import artists from "../../common/artists";
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
@@ -11,13 +12,14 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
-import { CardContent } from "@material-ui/core";
+import { CardContent, TextField } from "@material-ui/core";
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
+
 
 const styles = theme => ({
     root: {
@@ -55,7 +57,8 @@ class Home extends Component {
         super();
         this.state = {
             movieName: '',
-            genres:[]
+            genres:[],
+            artists :[]
         }
     }
     inputmovieNameChangeHandler = (e) => {
@@ -64,6 +67,10 @@ class Home extends Component {
 
     genreSelectHandler = event => {
         this.setState({ genres: event.target.value });
+    }
+
+    artistsSelectHandler = event => {
+        this.setState({ artists: event.target.value });
     }
 
     render() {
@@ -128,6 +135,29 @@ class Home extends Component {
                                             </MenuItem>
                                         ))}
                                     </Select>
+                                </FormControl>
+
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
+                                    <Select
+                                        multiple
+                                        input={<Input id="select-multiple-checkbox" />}
+                                        renderValue={selected => selected.join(',')}
+                                        value={this.state.artists}
+                                        onChange={this.artistsSelectHandler}
+                                    >
+                                        <MenuItem value="0">None</MenuItem>
+                                        {artists.map(artist => (
+                                            <MenuItem key={artist.id} value={artist.first_name +" "+artist.last_name}>
+                                                <Checkbox checked={this.state.artists.indexOf(artist.first_name +" "+artist.last_name) > -1} />
+                                                <ListItemText primary={artist.first_name +" "+artist.last_name} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl>
+                                    <TextField type= "date" label= "Release Date Start" id ="releasedatestart"   defaultValue ="" InputLabelProps={{shrink :true}} /> 
                                 </FormControl>
                             </CardContent>
 
