@@ -1,5 +1,7 @@
 import React, { Component } from "react"
+import ReactDOM from 'react-dom';
 import "./Home.css";
+import Details from "../../screens/details/Details"
 import Header from "../../common/header/Header"
 import { withStyles } from '@material-ui/core/styles';
 import moviesData from "../../common/movieData";
@@ -19,7 +21,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     root: {
@@ -57,8 +59,8 @@ class Home extends Component {
         super();
         this.state = {
             movieName: '',
-            genres:[],
-            artists :[]
+            genres: [],
+            artists: []
         }
     }
     inputmovieNameChangeHandler = (e) => {
@@ -73,6 +75,9 @@ class Home extends Component {
         this.setState({ artists: event.target.value });
     }
 
+    movieClickHandler =(movieId) =>{
+        ReactDOM.render(<Details  movieId= {movieId}/> , document.getElementById('root'));
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -95,7 +100,7 @@ class Home extends Component {
                     <div className="left">
                         <GridList cellHeight={350} cols={4} className={classes.gridListMain}>
                             {moviesData.map(movie => (
-                                <GridListTile className="released-movie-grid-item" key={"grid" + movie.id}>
+                                <GridListTile  onClick ={() => this.movieClickHandler(movie.id)} className="released-movie-grid-item" key={"grid" + movie.id}>
                                     <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
                                     <GridListTileBar
                                         title={movie.title}
@@ -148,16 +153,23 @@ class Home extends Component {
                                     >
                                         <MenuItem value="0">None</MenuItem>
                                         {artists.map(artist => (
-                                            <MenuItem key={artist.id} value={artist.first_name +" "+artist.last_name}>
-                                                <Checkbox checked={this.state.artists.indexOf(artist.first_name +" "+artist.last_name) > -1} />
-                                                <ListItemText primary={artist.first_name +" "+artist.last_name} />
+                                            <MenuItem key={artist.id} value={artist.first_name + " " + artist.last_name}>
+                                                <Checkbox checked={this.state.artists.indexOf(artist.first_name + " " + artist.last_name) > -1} />
+                                                <ListItemText primary={artist.first_name + " " + artist.last_name} />
                                             </MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>
 
                                 <FormControl>
-                                    <TextField type= "date" label= "Release Date Start" id ="releasedatestart"   defaultValue ="" InputLabelProps={{shrink :true}} /> 
+                                    <TextField type="date" label="Release Date Start" id="releasedatestart" defaultValue="" InputLabelProps={{ shrink: true }} />
+                                </FormControl><br />
+
+                                <FormControl>
+                                    <TextField type="date" label="Release Date End" id="releasedateend" defaultValue="" InputLabelProps={{ shrink: true }} />
+                                </FormControl><br /><br />
+                                <FormControl>
+                                    <Button variant='contained' color='primary' size='large'>Apply</Button>
                                 </FormControl>
                             </CardContent>
 
