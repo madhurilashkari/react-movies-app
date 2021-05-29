@@ -1,0 +1,26 @@
+.back {
+    margin-left: 24px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    height: 24px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .cardStyle {
+    width: 280px;
+    padding: 32px 64px 32px 64px;
+    margin: auto;
+    text-align: left;
+}
+.cardContaint{
+    width: 40%;
+}
+.coupon-container {
+    display: flex;
+  }
+  .formControl {
+    width: 240px;
+}
+.marginApply {
+    margin: 16px 0px 0px 16px;
+  }

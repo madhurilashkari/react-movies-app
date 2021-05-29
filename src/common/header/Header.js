@@ -11,7 +11,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import PropTypes from 'prop-types';
 import FormHelperText from '@material-ui/core/FormHelperText';
-
+import ReactDOM from 'react-dom';
+import BookShow from "../../screens/bookShow/BookShow";
 
 const customStyles = {
     content: {
@@ -122,6 +123,11 @@ class Header extends Component {
         this.state.registerPassword === "" ? this.setState({registerPasswordRequired :"dispBlock"}) : this.setState({registerPasswordRequired :"dispNone"});
         this.state.contactNo === "" ? this.setState({contactnoRequired :"dispBlock"}) : this.setState({contactnoRequired :"dispNone"});
     }
+
+    bookShowHandler = (e) => {
+       ReactDOM.render(<BookShow />, document.getElementById('root'));
+    }
+
     render() {
         return (
             <div>
@@ -132,6 +138,13 @@ class Header extends Component {
                             Login
                     </Button>
                     </div>
+                    {this.props.showBookShowButton === "true" ?
+                        <div className="bookshow-button">
+                            <Button variant="contained" color="primary" onClick={this.bookShowHandler}>
+                                Book Show
+                            </Button>
+                        </div>
+                        : ""}
                 </header>
                 <Model ariaHideApp={false} isOpen={this.state.modelIsOpen} contentLabel="Login" onRequestClose={this.closeModelHandler} style={customStyles} >
 
